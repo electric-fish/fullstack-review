@@ -41,22 +41,34 @@ class App extends React.Component {
       }
     })
     .then( (result) => {
-      // console.log(result);
-      console.log('Trying to fetch new data.');
-      return fetch('http://localhost:1128/repos', {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json'
-        }
-      });
+      if (result.status > 400) {
+        return result;
+      } else {
+        console.log('Trying to fetch new data.');
+        return fetch('http://localhost:1128/repos', {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json'
+          }
+        });
+      }
     })
     .then( (result) => {
       return result.json();
     })
     .then( (result) => {
-      this.setState({
-        repos: result
-      });
+
+      if (typeof result === 'string') {
+        alert(result);
+      } else {
+        this.setState({
+          repos: result
+        });
+      }
+
+    })
+    .catch( (error) => {
+      console.log(error);
     });
   }
 

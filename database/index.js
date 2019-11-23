@@ -12,6 +12,12 @@ let repoSchema = mongoose.Schema({
   avatar_url: String,
 });
 
+let userSchema = mongoose.Schema({
+  _id: Number,
+  name: String,
+  avatar_url: String,
+});
+
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (data) => {

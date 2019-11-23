@@ -21,29 +21,41 @@ let getReposByUsername = (username) => {
 
   let getRepoPromise = new Promise((resolve, reject) => {
     request(options, function (error, response, body) {
+      // console.log(response);
+      // console.log('===============');
+      // console.log(response.headers);
+      // console.log(response.headers.status);
+
       let repos = JSON.parse(body).items;
       let data = [];
-      for (var i = 0; i < repos.length; i++) {
-        let obj = {
-          _id: repos[i].id,
-          name: repos[i].name,
-          url: repos[i].html_url,
-          ownerId: repos[i].owner.id,
-          ownerName: repos[i].owner.login,
-          avatar_url: repos[i].owner.avatar_url,
-          count: repos[i].stargazers_count + repos[i].watchers_count + repos[i].forks_count
+
+      if (repos !== undefined) {
+        for (var i = 0; i < repos.length; i++) {
+          let obj = {
+            _id: repos[i].id,
+            name: repos[i].name,
+            url: repos[i].html_url,
+            ownerId: repos[i].owner.id,
+            ownerName: repos[i].owner.login,
+            avatar_url: repos[i].owner.avatar_url,
+            count: repos[i].stargazers_count + repos[i].watchers_count + repos[i].forks_count
+          }
+          data.push(obj);
         }
-        data.push(obj);
-      }
-      if (repos.length <= 0) {
-        console.log('No entries found, no need to insert.');
-        reject();
+        if (repos.length <= 0) {
+          console.log('No entries found, no need to insert.');
+          reject('No entries found, no need to insert.');
+        } else {
+          model.insert(data)
+          .then( result => {
+            resolve();
+          })
+        }
       } else {
-        model.insert(data)
-        .then( result => {
-          resolve();
-        })
+        console.log('ERROR!!!!!!');
+        reject('Error: The listed users and repositories cannot be searched either because the resources do not exist or you do not have permission to view them.');
       }
+
     });
   });
 

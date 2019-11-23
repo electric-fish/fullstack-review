@@ -21,6 +21,7 @@ app.post('/repos', function (req, res) {
     res.status(200).send('Server insertion to database complete.');
   })
   .catch( (error) => {
+    console.log('Server sees error: ', error);
     res.status(404).send(JSON.stringify(error));
   });
 });
