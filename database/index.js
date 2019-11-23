@@ -27,18 +27,21 @@ let save = (data) => {
       if (!result) {
         Repo.insertMany(data, (error, docs) => {
           console.log('Insert into empty database.')
+          resolve();
         });
       } else {
         Repo.deleteMany( {ownerId: data[0].ownerId}, (error) => {
           Repo.insertMany(data, (error, docs) => {
             console.log('Insert into existing database.')
             // console.log(docs);
+            resolve();
           });
         });
       }
     });
   });
 
+  return savePromise;
 }
 
 let query = () => {

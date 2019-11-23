@@ -4,7 +4,7 @@ module.exports = {
 
   insert: function (data) {
     console.log('Model inserting into database...');
-    db.save(data);
+    return db.save(data);
   },
 
   query: function () {

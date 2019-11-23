@@ -16,8 +16,14 @@ app.post('/repos', function (req, res) {
   let username = req.body;
   console.log("Searching '" + req.body + "'...");
 
-  controller.getGitHub(username);
-  res.status(200).send('Server responded.');
+  controller.getGitHub(username)
+  .then( (result) => {
+    res.status(200).send('Server insertion to database complete.');
+  })
+  .catch( (error) => {
+    res.status(404).send(JSON.stringify(error));
+  });
+  // res.status(200).send('Server responded.');
 });
 
 app.get('/repos', function (req, res) {
@@ -26,7 +32,6 @@ app.get('/repos', function (req, res) {
   // let data = controller.query(); //return a promise
   controller.query()
   .then( (result) => {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!');
     console.log(result);
     res.status(200).send(JSON.stringify(result));
   })

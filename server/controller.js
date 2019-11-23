@@ -5,7 +5,7 @@ module.exports = {
 
   getGitHub: function (username) {
     console.log("Controller searching '"+ username + "'...");
-    github.getReposByUsername(username);
+    return github.getReposByUsername(username);
   },
 
   query: function () {
