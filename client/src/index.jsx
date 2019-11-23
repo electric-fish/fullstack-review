@@ -23,7 +23,7 @@ class App extends React.Component {
       return result.json();
     })
     .then( (result) => {
-      console.log(result);
+      // console.log(result);
       this.setState({
         repos: result
       });
@@ -41,7 +41,7 @@ class App extends React.Component {
       }
     })
     .then( (result) => {
-      console.log(result);
+      // console.log(result);
       console.log('Trying to fetch new data.');
       return fetch('http://localhost:1128/repos', {
         method: 'GET',

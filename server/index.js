@@ -28,7 +28,7 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  // let data = controller.query(); //return a promise
+
   controller.query()
   .then( (result) => {
     // console.log(result);
