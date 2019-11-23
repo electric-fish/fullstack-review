@@ -8,7 +8,8 @@ let repoSchema = mongoose.Schema({
   url: String,
   ownerId: Number,
   ownerName: String,
-  count: Number
+  count: Number,
+  avatar_url: String,
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
@@ -18,12 +19,12 @@ let save = (data) => {
   // This function should save a repo or repos to
   // the MongoDB
   console.log('Running mongoose.save...');
-  console.log('Data:', data);
+  // console.log('Data:', data);
 
   let savePromise = new Promise((resolve, reject) => {
     Repo.exists()
     .then( (result) => {
-      console.log(result);
+      // console.log(result);
       if (!result) {
         Repo.insertMany(data, (error, docs) => {
           console.log('Insert into empty database.')
@@ -52,20 +53,12 @@ let query = () => {
     query.sort({count: -1});
     query.limit(25);
     query.find({}, (err, docs) => {
-      console.log(docs);
+      // console.log(docs);
       resolve(docs);
     });
   });
 
   return dataPromise;
-
-  // const query = Repo.find();
-  // query.sort({count: -1});
-  // query.limit(25);
-  // query.find({}, (err, docs) => {
-  //   console.log(err);
-  //   console.log(docs);
-  // });
 }
 
 

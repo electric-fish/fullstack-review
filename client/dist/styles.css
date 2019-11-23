@@ -7,3 +7,9 @@ body {
 a {
   color: #aaaa99;
 }
+
+.img_avatar {
+  margin: auto;
+  width: 25px;
+  height: 25px;
+}

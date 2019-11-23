@@ -23,7 +23,6 @@ app.post('/repos', function (req, res) {
   .catch( (error) => {
     res.status(404).send(JSON.stringify(error));
   });
-  // res.status(200).send('Server responded.');
 });
 
 app.get('/repos', function (req, res) {
@@ -32,7 +31,7 @@ app.get('/repos', function (req, res) {
   // let data = controller.query(); //return a promise
   controller.query()
   .then( (result) => {
-    console.log(result);
+    // console.log(result);
     res.status(200).send(JSON.stringify(result));
   })
   .catch( (error) => {

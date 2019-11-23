@@ -9,7 +9,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       repos: []
-      // repos: [{id: 0, name: 'a'}, {id: 1, name: 'b'}]
     }
   }
 
@@ -42,6 +41,7 @@ class App extends React.Component {
       }
     })
     .then( (result) => {
+      console.log(result);
       console.log('Trying to fetch new data.');
       return fetch('http://localhost:1128/repos', {
         method: 'GET',

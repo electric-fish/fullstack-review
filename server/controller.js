@@ -11,7 +11,6 @@ module.exports = {
   query: function () {
     console.log('Controller trying to query top 25...');
     return model.query();
-    //return a promise
   }
 
 }
