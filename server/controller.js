@@ -11,6 +11,12 @@ module.exports = {
   query: function () {
     console.log('Controller trying to query top 25...');
     return model.query();
+  },
+
+  queryUser: function () {
+    console.log('Controller trying to query top 25...');
+    return model.queryUser();
   }
+
 
 }

@@ -10,15 +10,18 @@ let repoSchema = mongoose.Schema({
   ownerName: String,
   count: Number,
   avatar_url: String,
+  contributors: [],
 });
 
 let userSchema = mongoose.Schema({
   _id: Number,
   name: String,
   avatar_url: String,
+  url: String,
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
+let User = mongoose.model('User', userSchema);
 
 let save = (data) => {
   // TODO: Your code here
@@ -67,7 +70,28 @@ let query = () => {
   return dataPromise;
 }
 
+let saveUser = (userData) => {
+  let userPromise = new Promise((resolve, reject) => {
+    User.insertMany(userData, (error, docs) => {
+      resolve();
+    });
+  });
+  return userPromise;
+}
 
+let queryUser = () => {
+  let userDataPromise = new Promise((resolve, reject) => {
+    const query = User.find();
+    query.find({}, (err, docs) => {
+      console.log(docs);
+      resolve(docs);
+    });
+  });
+
+  return userDataPromise;
+}
 
 module.exports.save = save;
 module.exports.query = query;
+module.exports.saveUser = saveUser;
+module.exports.queryUser = queryUser;

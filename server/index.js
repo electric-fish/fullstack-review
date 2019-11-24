@@ -40,6 +40,18 @@ app.get('/repos', function (req, res) {
   });
 });
 
+
+app.get('/users', function (req, res) {
+  console.log('popok')
+  controller.queryUser()
+  .then( (result) => {
+    res.status(200).send(JSON.stringify(result));
+  })
+  .catch( (error) => {
+    res.status(404).send(JSON.stringify(error));
+  });
+});
+
 let port = 1128;
 
 app.listen(port, function() {

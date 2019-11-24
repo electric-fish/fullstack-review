@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
+import UserList from './components/UserList.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      repos: []
+      repos: [],
+      users: [],
     }
   }
 
@@ -27,6 +29,24 @@ class App extends React.Component {
       this.setState({
         repos: result
       });
+      return fetch('http://localhost:1128/users', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+    })
+    .then( (result) => {
+      return result.json();
+    })
+    .then ((result) => {
+      this.setState({
+        users: result
+      });
+      // console.log(result);
+    })
+    .catch( (error) => {
+      console.log(error);
     });
   }
 
@@ -66,6 +86,21 @@ class App extends React.Component {
         });
       }
 
+      return fetch('http://localhost:1128/users', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+
+    })
+    .then( (result) => {
+      return result.json();
+    })
+    .then ((result) => {
+      this.setState({
+        users: result
+      });
     })
     .catch( (error) => {
       console.log(error);
@@ -75,8 +110,9 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos} />
       <Search onSearch={this.search.bind(this)} />
+      <RepoList repos={this.state.repos} />
+      <UserList users={this.state.users} />
     </div>)
   }
 }

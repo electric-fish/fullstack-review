@@ -10,6 +10,14 @@ module.exports = {
   query: function () {
     console.log('Model trying to query top 25...');
     return db.query();
-  }
+  },
+
+  insertUser: function (userData) {
+    return db.saveUser(userData);
+  },
+
+  queryUser: function (userData) {
+    return db.queryUser();
+  },
 
 }
