@@ -4,13 +4,16 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 import UserList from './components/UserList.jsx';
+import UserInfo from './components/UserInfo.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      page: 0,
       repos: [],
       users: [],
+      userRepos: []
     }
   }
 
@@ -49,6 +52,8 @@ class App extends React.Component {
       console.log(error);
     });
   }
+
+
 
   search (term) {
     console.log(`Searching '${term}'...`);
@@ -107,13 +112,47 @@ class App extends React.Component {
     });
   }
 
+
+
+  userClickHandler (userid) {
+    fetch('http://localhost:1128/userinfo?q=' + userid, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then( (result) => {
+      return result.json();
+    })
+    .then( (result) => {
+      this.setState({
+        page: 1,
+        userRepos: result
+      });
+    });
+  }
+
+  homeClickHandler () {
+    this.setState({
+      page: 0
+    });
+  }
+
+
   render () {
-    return (<div>
-      <h1>Github Fetcher</h1>
-      <Search onSearch={this.search.bind(this)} />
-      <RepoList repos={this.state.repos} />
-      <UserList users={this.state.users} />
-    </div>)
+    if (this.state.page === 0) {
+      return (<div>
+        <h1>Github Fetcher</h1>
+        <Search onSearch={this.search.bind(this)} />
+        <RepoList repos={this.state.repos} />
+        <UserList users={this.state.users} userClickHandler={this.userClickHandler.bind(this)} />
+      </div>)
+    } else {
+      return (<div>
+        <h1>User Page</h1>
+        <UserInfo userRepos={this.state.userRepos} homeClickHandler={this.homeClickHandler.bind(this)} />
+      </div>)
+    }
   }
 }
 

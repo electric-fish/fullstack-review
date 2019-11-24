@@ -6,7 +6,7 @@ const UserList = (props) => {
   const userList = users.map( (user) => {
     // console.log(user);
     return (
-      <li>{user.name}</li>
+      <li onClick={() => {props.userClickHandler(user._id)}}>{user.name}</li>
     );
   });
 

@@ -83,7 +83,7 @@ let queryUser = () => {
   let userDataPromise = new Promise((resolve, reject) => {
     const query = User.find();
     query.find({}, (err, docs) => {
-      console.log(docs);
+      // console.log(docs);
       resolve(docs);
     });
   });
@@ -91,7 +91,21 @@ let queryUser = () => {
   return userDataPromise;
 }
 
+let queryUserInfo = (userid) => {
+  console.log('Database trying to query user info...');
+  let userInfoPromise = new Promise((resolve, reject) => {
+    const query = Repo.find({ ownerId: userid }, function (err, data) {
+      query.sort({count: -1});
+      query.limit(10);
+      // console.log(data);
+      resolve(data);
+    });
+  });
+  return userInfoPromise;
+}
+
 module.exports.save = save;
 module.exports.query = query;
 module.exports.saveUser = saveUser;
 module.exports.queryUser = queryUser;
+module.exports.queryUserInfo = queryUserInfo;

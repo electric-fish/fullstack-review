@@ -20,4 +20,9 @@ module.exports = {
     return db.queryUser();
   },
 
+  queryUserInfo: function (userid) {
+    console.log('Model trying to query user info...');
+    return db.queryUserInfo(userid);
+  }
+
 }
